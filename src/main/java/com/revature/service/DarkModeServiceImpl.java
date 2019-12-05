@@ -6,14 +6,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DarkModeServiceImpl implements DarkModeService {
-
-	private final Object lock1 = new Object();
-	private final Object lock2 = new Object();
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public void enableDarkMode() {
-		enableDarkModeAsynchronously();
+		logger.info("Dark Mode Enabled");
+		// enableDarkModeAsynchronously();
 	}
+	
+
+	public static void main(String[] args) {
+		new DarkModeServiceImpl().enableDarkMode();
+	}
+	
+	/*
+	 * 
+	private final Object lock1 = new Object();
+	private final Object lock2 = new Object();
 	
 	private void enableDarkModeAsynchronously() {
 		new Thread(() -> {
@@ -66,8 +75,5 @@ public class DarkModeServiceImpl implements DarkModeService {
 			}
 		}
 	}
-	
-	public static void main(String[] args) {
-		new DarkModeServiceImpl().enableDarkMode();
-	}
+	*/
 }
