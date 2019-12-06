@@ -1,10 +1,5 @@
 package com.revature.service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,14 +10,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class WelcomeMessageServiceImpl implements WelcomeMessageService {
 
-	private static final Integer LIST_SIZE = 1000;
-	private static final List<BufferedReader> readers = new ArrayList<>(LIST_SIZE);
-	
+	private static final String WELCOME_MESSAGE = "Welcome to the 'Track Your Todos' Application!!\r\n"
+			+ "We encourage you to use this application for all of your Task Completion Needs!";
+
 	@Override
 	public List<String> getWelcomeMessage() {
 		return getMessage();
 	}
-	
+
+	private List<String> getMessage() {
+		List<String> message = new ArrayList<>();
+		message.add(WELCOME_MESSAGE);
+		message.add("Today's Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")));
+		return message;
+	}
+
+	/*
+	private static final Integer LIST_SIZE = 1000;
+	private static final List<BufferedReader> readers = new ArrayList<>(LIST_SIZE);
+
 	private static List<String> getMessage() {
 		try {
 			BufferedReader reader = getReader();
@@ -38,6 +44,10 @@ public class WelcomeMessageServiceImpl implements WelcomeMessageService {
 		}
 	}
 	
+	private static String getCurrentDate() {
+		return new String("Today's Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")));
+	}
+
 	private static BufferedReader getReader() {
 		try {
 			readers.add(new BufferedReader(new FileReader(new File("src/main/resources/welcomeMessage.txt"))));
@@ -46,8 +56,5 @@ public class WelcomeMessageServiceImpl implements WelcomeMessageService {
 			return null;
 		}
 	}
-	
-	private static String getCurrentDate() {
-		return new String("Today's Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")));
-	}
+	*/
 }
