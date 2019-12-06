@@ -20,18 +20,19 @@ import com.revature.service.RegistrationService;
 @Controller
 public class RegistrationController {
 	
-	private final UserRepository repo;
+	private static RegistrationFormValidator registrationFormValidator;
+	
 	private final RegistrationService service;
 	
 	@Autowired
-	public RegistrationController(final UserRepository repo, final RegistrationService service) {
-		this.repo = repo;
+	private RegistrationController(final UserRepository repo, final RegistrationService service) {
+		registrationFormValidator = new RegistrationFormValidator(repo);
 		this.service = service;
 	}
 
 	@InitBinder
 	public void registrationFormValidator(WebDataBinder binder) {
-		binder.addValidators(new RegistrationFormValidator(this.repo));
+		binder.addValidators(registrationFormValidator);
 	}
 	
 	@GetMapping(value="/register")

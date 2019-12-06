@@ -29,8 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class TodoServiceImpl implements TodoService {
 
 	private static final Logger logger = LoggerFactory.getLogger(TodoServiceImpl.class);
-
-	private static final int THREAD_POOL_SIZE = 5;
 	
 	@Autowired
 	private TodoRepository repo;
@@ -116,13 +114,23 @@ public class TodoServiceImpl implements TodoService {
 	}
 	
 	private List<Todo> getTodosByUserAsync(List<Todo> todos, Principal principal) {
-		List<Todo> currentUserTodos = new CopyOnWriteArrayList<>(todos);
+		List<Todo> currentUserTodos = new ArrayList<Todo>();
+		for (Todo todo2 : todos) {
+			if(todo2.getUser().getUsername().equals(principal.getName())) {
+				currentUserTodos.add(todo2);
+			}
+		}
+		return currentUserTodos;
+	}
+	
+	/*
 		ExecutorService service = null;
 		try {
 			do {
 				service = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * THREAD_POOL_SIZE);
 				
 				Future<Todo> future = service.submit(new FetchCurrentUserTodoTask(this, currentUserTodos, principal));
+				logger.info("future {}", future.get());
 				currentUserTodos.remove(future.get());
 			} while (!listContainsOnlyCurrentUserTodos(currentUserTodos, principal));
 		} catch (TodoNotFoundException e) {
@@ -137,8 +145,7 @@ public class TodoServiceImpl implements TodoService {
 		
 		Collections.sort(currentUserTodos, Comparator.comparingInt(Todo::getId));
 		return currentUserTodos.parallelStream().filter(todo -> todo.getUser().getUsername().equals(principal.getName())).collect(Collectors.toList());
-	}
-	
+		
 	private boolean listContainsOnlyCurrentUserTodos(List<Todo> todos, Principal principal) {
 		for (Todo t : todos) {
 			if (!t.getUser().getUsername().equals(principal.getName()))
@@ -172,4 +179,5 @@ public class TodoServiceImpl implements TodoService {
 		}
 		
 	}
+	*/
 }
