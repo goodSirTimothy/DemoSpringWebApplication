@@ -11,12 +11,6 @@ public class DarkModeServiceImpl implements DarkModeService {
 	@Override
 	public void enableDarkMode() {
 		logger.info("Dark Mode Enabled");
-		// enableDarkModeAsynchronously();
-	}
-	
-
-	public static void main(String[] args) {
-		new DarkModeServiceImpl().enableDarkMode();
 	}
 	
 	/*
@@ -74,6 +68,10 @@ public class DarkModeServiceImpl implements DarkModeService {
 				}
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		new DarkModeServiceImpl().enableDarkMode();
 	}
 	*/
 }

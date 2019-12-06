@@ -13,18 +13,14 @@ import com.revature.service.TodoService;
 
 @Controller
 public class DarkModeController {
+	private static final DarkModeService darkModeService = new DarkModeServiceImpl();
 	
-	private DarkModeService darkModeService;
-	
-	@Autowired
-	private TodoService todoService;
+	private DarkModeController() {
+	}
 
 	@GetMapping(value="/enable-dark-mode")
 	public String enableDarkMode(Principal principal, Model model) {
-		darkModeService = new DarkModeServiceImpl();
 		darkModeService.enableDarkMode();
-		model.addAttribute("currentUser", principal.getName());
-		model.addAttribute("todos", todoService.getAllTodos(principal));
 		return "redirect:/todos";
 	}
 }

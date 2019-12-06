@@ -15,10 +15,6 @@ public class WelcomeMessageServiceImpl implements WelcomeMessageService {
 
 	@Override
 	public List<String> getWelcomeMessage() {
-		return getMessage();
-	}
-
-	private List<String> getMessage() {
 		List<String> message = new ArrayList<>();
 		message.add(WELCOME_MESSAGE);
 		message.add("Today's Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")));
